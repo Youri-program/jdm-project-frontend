@@ -1,0 +1,165 @@
+[
+  {
+    "id": 1,
+    "title": "HEAD LIFT",
+    "description": "Lift your head off the table and hold it as long as you can.",
+    "options": [
+      "Unable",
+      "1\u20139 seconds",
+      "10\u201329 seconds",
+      "30\u201359 seconds",
+      "60\u2013119 seconds",
+      "> 2 minutes"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "LEG RAISE/TOUCH OBJECT",
+    "description": "Try to lift your leg high enough to touch the examiner\u2019s hand.",
+    "options": [
+      "Unable to lift leg off table",
+      "Lifts leg, cannot touch hand",
+      "Touches examiner's hand"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "STRAIGHT LEG LIFT/DURATION",
+    "description": "Raise your straight leg and hold it in the air.",
+    "options": [
+      "Unable",
+      "1\u20139 seconds",
+      "10\u201329 seconds",
+      "30\u201359 seconds",
+      "60\u2013119 seconds",
+      "> 2 minutes"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "SUPINE TO PRONE",
+    "description": "Roll over from back to stomach.",
+    "options": [
+      "Unable, barely moves arm",
+      "Turns, can't free arm or assume prone",
+      "Turns, struggles but succeeds",
+      "Turns easily and fully"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "SIT-UPS",
+    "description": "Perform sit-ups in multiple hand positions. (Scored from 0\u20136)",
+    "options": [
+      "Hands on thighs with counterbalance",
+      "Hands across chest with counterbalance",
+      "Hands behind head with counterbalance",
+      "Hands on thighs without counterbalance",
+      "Hands across chest without counterbalance",
+      "Hands behind head without counterbalance"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "SUPINE TO SIT",
+    "description": "Sit up from lying on your back.",
+    "options": [
+      "Unable",
+      "Much difficulty",
+      "Some difficulty",
+      "No difficulty"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "ARM RAISE/STRAIGHTEN",
+    "description": "Raise arms as high as you can.",
+    "options": [
+      "Cannot raise wrists to shoulder",
+      "Raises wrists to shoulder but not overhead",
+      "Overhead but not fully extended",
+      "Arms overhead and fully extended"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "ARM RAISE/DURATION",
+    "description": "Hold your arms above your head.",
+    "options": [
+      "Unable",
+      "1\u20139 seconds",
+      "10\u201329 seconds",
+      "30\u201359 seconds",
+      "> 60 seconds"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "FLOOR SIT",
+    "description": "From standing, sit on the floor.",
+    "options": [
+      "Unable or fearful",
+      "Much difficulty, needs chair support",
+      "Some difficulty, may use hands/knees",
+      "No difficulty"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "ALL FOURS MANEUVER",
+    "description": "Get onto hands and knees, and crawl.",
+    "options": [
+      "Unable",
+      "Barely maintains all-fours, can't raise head",
+      "All-fours with head up, no crawling",
+      "All-fours and crawls forward",
+      "Crawls and lifts one leg"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "FLOOR RISE",
+    "description": "Kneel on floor, then stand up.",
+    "options": [
+      "Unable, even with chair",
+      "Much difficulty, needs chair",
+      "Moderate difficulty, uses hands",
+      "Mild difficulty",
+      "No difficulty"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "CHAIR RISE",
+    "description": "Stand up from a chair.",
+    "options": [
+      "Unable even with help",
+      "Much difficulty, uses sides of chair",
+      "Moderate difficulty, uses knees",
+      "Mild difficulty",
+      "No difficulty"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "STOOL STEP",
+    "description": "Step up onto a stool.",
+    "options": [
+      "Unable",
+      "Much difficulty, uses support",
+      "Some difficulty, uses thigh",
+      "No difficulty"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "PICK-UP",
+    "description": "Bend down to pick up an object from the floor.",
+    "options": [
+      "Unable",
+      "Much difficulty, needs thigh support",
+      "Some difficulty, briefly uses thigh/knee",
+      "No difficulty"
+    ]
+  }
+]
