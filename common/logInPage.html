@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor & Patient Login</title>
+    <title>Myotrack</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,29 +18,29 @@
     <!-- Patient Login Form -->
 
     <div id="user-form" class="form">
-        <img src="../../AppData/Local/packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/TempState/2754518221CFBC8D25C13A06A4CB8421/1.png"
-             height="250" width="250"/>
+        <img src="../resources/1.png" height="250" width="250"/>
+
 
         <h2>Patient Login</h2>
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
-        <input type="password" placeholder="Password" required>
-        <button>Login</button>
+        <input id="us_usern" type="text" placeholder="Username" required>
+        <input id="us_passw" type="password" placeholder="Password" required>
+
+        <button id="patient-login-btn">Login</button>
     </div>
 
     <!-- Doctor Login Form -->
     <div id="admin-form" class="form hidden">
-        <img src="../../AppData/Local/packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/TempState/2754518221CFBC8D25C13A06A4CB8421/1.png"
-             height="250" width="250"/>
+        <img src="../resources/1.png" height="250" width="250"/>
         <h2>Doctor Login</h2>
-        <input type="text" placeholder="Doctor ID" required>
-        <input type="password" placeholder="Password" required>
-        <input type="password" placeholder="Password" required>
+        <input id="doc_user" type="text" placeholder="Username" required>
+        <input idx="doc_passw" type="password" placeholder="Password" required>
+
         <button>Login</button>
     </div>
 
 
 
-<script src="scripts.js"></script>
+    <script src="scripts.js"></script>
+    <script src="log_in.js"></script>
 </body>
 </html>

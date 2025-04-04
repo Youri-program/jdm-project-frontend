@@ -10,6 +10,17 @@ function switchForm(role) {
         adminForm.classList.add('hidden');
         userBtn.classList.add('active');
         adminBtn.classList.remove('active');
+        const userAction = async () => {
+            const response = await fetch('https://cmas-test-server-amauh3bjc4cug8gs.northeurope-01.azurewebsites.net/api/auth/login', {
+                method: 'POST',
+                body: myBody, // string or object
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+        }
 
         // Reset to blue theme
         body.classList.remove('doctor-mode');
