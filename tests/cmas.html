@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CMAS Test</title>
+  <link rel="stylesheet" href="../css/cmas.css" />
+</head>
+<body>
+  <div class="test-container">
+    <!-- Intro Section -->
+    <div id="intro-screen">
+      <h1>Welcome to the CMAS Test</h1>
+      <p>This test will guide you through 14 exercises that assess muscle strength and function. Follow the instructions and do your best.</p>
+      <button id="start-test-btn">Start Test</button>
+    </div>
+
+    <!-- Test Interface -->
+    <div id="question-screen" class="hidden">
+      <h2 id="question-title">CMAS Test: Question 1</h2>
+      <div class="question-layout">
+        <div class="left">
+          <h3 id="question-text"></h3>
+          <p id="question-description"></p>
+          <div id="answer-options" class="answers"></div>
+          <div class="doctor-notes">
+            <h4>Notes from Doctor:</h4>
+            <textarea disabled placeholder="Doctor may leave notes here..."></textarea>
+          </div>
+        </div>
+        <div class="right">
+          <div class="camera-placeholder">Camera Placeholder</div>
+        </div>
+      </div>
+      <div class="nav-controls">
+        <button id="prev-btn" disabled>⬅</button>
+        <div class="progress-bar">
+          <div id="progress" style="width: 0%"></div>
+        </div>
+        <button id="next-btn">➡</button>
+      </div>
+    </div>
+  </div>
+  <script src="../js/cmas.js"></script>
+</body>
+</html>
