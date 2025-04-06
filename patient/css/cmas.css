@@ -67,7 +67,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 520px; /* 2 boxes stacked + spacing */
+    height: 560px; /* 2 boxes stacked + spacing */
   }
   
   .camera-placeholder {
