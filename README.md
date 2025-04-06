@@ -1,1 +1,0 @@
-# jdm-project-frontend
