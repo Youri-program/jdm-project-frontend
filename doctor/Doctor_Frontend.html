@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myotracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <img src="2.png" alt="Logo">
+    </header>
+
+    <main class="contenedor-principal">
+        <section class="seleccion-paciente">
+            <p class="mi-parrafo">Choose a patient:</p>
+            <div class="perfiles">
+                <div class="perfil" id="perfil-alexander">
+                    <i class="fas fa-user"></i>
+                    <p class="nombre">Alexander</p>
+                </div>
+
+                <div class="perfil" id="perfil-sofia">
+                    <i class="fas fa-user"></i>
+                    <p class="nombre">Sofia</p>
+                </div>
+
+                <div class="perfil" id="perfil-daniel">
+                    <i class="fas fa-user"></i>
+                    <p class="nombre">Daniel</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="resultados-seccion">
+            <div class="grafica-container">
+                <h3 id="titulo-evolucion">CMAS Evolution</h3>
+                <div class="grafica">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="resultados-detallados">
+                <h3 id="titulo-resultados">Test Results</h3>
+                <div class="grafica-barras-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+
+                <div class="tabla-resultados-container">
+                    <h4 id="titulo-detalle">Detailed Tests</h4>
+                    <table id="tabla-resultados">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Score</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="video-evaluacion">
+                <h3 id="titulo-video">Evaluation Video</h3>
+                <div class="video-container">
+                    <video id="video-paciente" controls poster="thumbnails/default.jpg">
+                        <source src="" type="video/mp4">
+                        Your browser doesn't support HTML5 video.
+                    </video>
+                </div>
+                <p class="video-nota">* Demo videos preloaded for demonstration</p>
+            </div>
+        </section>
+
+        <section class="mensajeria-paciente">
+            <h3 id="titulo-mensaje">Send Message to Patient</h3>
+            <div class="mensaje-container">
+                <div class="selector-tipo">
+                    <label for="tipo-mensaje">Message Type:</label>
+                    <select id="tipo-mensaje">
+                        <option value="task">Exercise Task</option>
+                        <option value="reminder">Appointment Reminder</option>
+                        <option value="feedback">Progress Feedback</option>
+                        <option value="custom">Custom Message</option>
+                    </select>
+                </div>
+
+                <div class="editor-mensaje">
+                    <textarea id="texto-mensaje" placeholder="Write your message here..."></textarea>
+                    <div class="opciones-ejercicio" id="opciones-ejercicio">
+                        <label>Select Exercises:</label>
+                        <div class="checkboxes">
+                            <label><input type="checkbox" name="ejercicio" value="head_lift"> Head Lift</label>
+                            <label><input type="checkbox" name="ejercicio" value="leg_raise"> Leg Raise</label>
+                            <label><input type="checkbox" name="ejercicio" value="arm_raise"> Arm Raise</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controles-envio">
+                    <button id="btn-enviar" class="btn-enviar">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <div class="confirmacion-envio" id="confirmacion-envio">
+                        <i class="fas fa-check-circle"></i> Message sent successfully!
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="javascript_doctor.js"></script>
+</body>
+
+</html>
