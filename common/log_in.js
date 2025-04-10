@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (authToken) {
                 localStorage.setItem('authToken', authToken);
+                localStorage.setItem('username', loginData.username); // Store username
                 window.location.href = '../patient/index.html';
             } else {
                 console.error('Authorization token not found in response');
