@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             localStorage.setItem('authToken', token);
+            localStorage.setItem('username', loginData.username);
             window.location.href = userType === 'doctor' ? '../doctor/Doctor_Frontend.html' : '../patient/index.html';
         } catch (error) {
             console.error('Error during login:', error);
