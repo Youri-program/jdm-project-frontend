@@ -3,8 +3,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const doc_usn = document.getElementById('doc_user');
     const user_pass = document.getElementById('us_pass');
     const doc_pass = document.getElementById('doc_pass');
+    const reg_usn= document.getElementById('usr_register_usern');
+    const email= document.getElementById('email');
+    const reg_pasw= document.getElementById('usr_register_pasw');
+    const first_n= document.getElementById('first_n');
+    const last_n= document.getElementById('last_n');
+    const phone_num= document.getElementById('phone_num');
+    const date_birth= document.getElementById('date_birth');
 
-    async function authenticate(username, password, userType) {
+
+
+
+    document.getElementById('patient-login-btn').addEventListener('click', async function() {
         try {
             const loginData = { username, password };
             const request = {
@@ -18,12 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             const response = await fetch('https://cmas-test-server-amauh3bjc4cug8gs.northeurope-01.azurewebsites.net/api/auth/login', request);
-
-            console.log('Status:', response.status);
-            console.log('Headers:');
-            response.headers.forEach((value, name) => {
-                console.log(`${name}: ${value}`);
-            });
+        
 
             if (!response.ok) {
                 const responseText = await response.text();
@@ -67,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             localStorage.setItem('authToken', token);
-            localStorage.setItem('username', loginData.username);
             window.location.href = userType === 'doctor' ? '../doctor/Doctor_Frontend.html' : '../patient/index.html';
         } catch (error) {
             console.error('Error during login:', error);
