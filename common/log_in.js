@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
->>>>>>> Stashed changes
 
-    async function authenticate(username, password, userType) {
+
+    document.getElementById('patient-login-btn').addEventListener('click', async function() {
         try {
             const loginData = { username, password };
             const request = {
