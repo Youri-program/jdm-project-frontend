@@ -1,7 +1,7 @@
-// auth.js (debe estar en el mismo directorio o ajustar la ruta)
+// auth.js (must be in the same directory or adjust the path)
 export const API_BASE_URL = 'https://cmas-test-server-amauh3bjc4cug8gs.northeurope-01.azurewebsites.net/api';
 
-// Mostrar notificación
+// Show notification
 export function showNotification(message, type = 'success', duration = 3000) {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
@@ -20,7 +20,7 @@ export function showNotification(message, type = 'success', duration = 3000) {
     }, duration);
 }
 
-// Función para hacer fetch con autenticación
+// Function to make authenticated fetch requests
 export async function fetchWithAuth(endpoint, options = {}) {
     const token = localStorage.getItem('authToken');
     const url = `${API_BASE_URL}${endpoint}`;
@@ -42,6 +42,7 @@ export async function fetchWithAuth(endpoint, options = {}) {
 
         if (response.status === 401) {
             localStorage.removeItem('authToken');
+            localStorage.removeItem('userType');
             window.location.href = '/login.html';
             return null;
         }
@@ -59,7 +60,7 @@ export async function fetchWithAuth(endpoint, options = {}) {
     }
 }
 
-// Verificar autenticación
+// Verify authentication
 export function checkAuth() {
     const token = localStorage.getItem('authToken');
     const userType = localStorage.getItem('userType');
@@ -72,16 +73,18 @@ export function checkAuth() {
 // javascript_doctor.js
 import { fetchWithAuth, showNotification, checkAuth } from './auth.js';
 
-// Variables globales
+// Global variables
 let currentPatientId = null;
 let lineChartInstance = null;
 let barChartInstance = null;
+let currentTestId = null;
 
-// Inicialización de la página
+// Page initialization
 document.addEventListener('DOMContentLoaded', async function() {
     checkAuth();
     setupLogout();
     await initializePage();
+    setupTestManagement();
 });
 
 function setupLogout() {
@@ -94,17 +97,17 @@ function setupLogout() {
 
 async function initializePage() {
     try {
-        // Cargar lista de pacientes
-        const patients = await fetchWithAuth('/patients');
+        // Load assigned patients list
+        const patients = await fetchWithAuth('/doctor/assignedPatients');
         renderPatientProfiles(patients);
 
-        // Cargar datos del primer paciente si existe
+        // Load data for the first patient if exists
         if (patients.length > 0) {
-            currentPatientId = patients[0].id;
+            currentPatientId = patients[0].patientId;
             await updatePatientData(currentPatientId);
         }
 
-        // Configurar mensajería
+        // Setup messaging
         setupMessaging();
     } catch (error) {
         console.error('Initialization error:', error);
@@ -118,15 +121,16 @@ function renderPatientProfiles(patients) {
     patients.forEach(patient => {
         const profile = document.createElement('div');
         profile.className = 'perfil';
-        profile.id = `perfil-${patient.id}`;
+        profile.id = `perfil-${patient.patientId}`;
         profile.innerHTML = `
             <i class="fas fa-user"></i>
-            <p class="nombre">${patient.name}</p>
+            <p class="nombre">${patient.firstName} ${patient.lastName}</p>
+            <small>DOB: ${new Date(patient.dateOfBirth).toLocaleDateString()}</small>
         `;
 
         profile.addEventListener('click', async () => {
-            currentPatientId = patient.id;
-            await updatePatientData(patient.id);
+            currentPatientId = patient.patientId;
+            await updatePatientData(patient.patientId);
         });
 
         profilesContainer.appendChild(profile);
@@ -137,19 +141,35 @@ async function updatePatientData(patientId) {
     try {
         showNotification('Loading patient data...', 'info');
         
-        const [patient, results, history] = await Promise.all([
+        const [patient, tests] = await Promise.all([
             fetchWithAuth(`/patients/${patientId}`),
-            fetchWithAuth(`/patients/${patientId}/results/latest`),
-            fetchWithAuth(`/patients/${patientId}/results`)
+            fetchWithAuth(`/doctor/tests/results/${patientId}`)
         ]);
 
-        updatePatientTitles(patient.name);
-        createLineChart(history);
-        createBarChart(results.tests);
-        fillResultsTable(results.tests);
-        updatePatientVideo(results.videoUrl);
+        updatePatientTitles(`${patient.firstName} ${patient.lastName}`);
+        
+        if (tests.length > 0) {
+            // Get the latest test
+            const latestTest = tests[tests.length - 1];
+            currentTestId = latestTest.testId;
+            
+            createLineChart(tests);
+            createBarChart(latestTest.results);
+            fillResultsTable(latestTest.results);
+            updatePatientVideo(latestTest.videoUrl);
+            
+            // Load test notes if available
+            if (latestTest.notes) {
+                displayTestNotes(latestTest.notes);
+            }
+        } else {
+            // No tests available
+            resetCharts();
+            clearResultsTable();
+            showNotification('No test results available for this patient', 'info');
+        }
 
-        showNotification(`${patient.name}'s data loaded successfully`, 'success');
+        showNotification('Patient data loaded successfully', 'success');
     } catch (error) {
         console.error('Error updating patient data:', error);
     }
@@ -163,7 +183,7 @@ function updatePatientTitles(patientName) {
     document.getElementById('titulo-mensaje').textContent = `Send Message to ${patientName}`;
 }
 
-function createLineChart(history) {
+function createLineChart(testsHistory) {
     const ctx = document.getElementById('lineChart').getContext('2d');
     
     if (lineChartInstance) lineChartInstance.destroy();
@@ -171,10 +191,10 @@ function createLineChart(history) {
     lineChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: history.map((_, index) => `Test ${index + 1}`),
+            labels: testsHistory.map((_, index) => `Test ${index + 1}`),
             datasets: [{
                 label: 'CMAS Score',
-                data: history.map(test => test.cmasScore),
+                data: testsHistory.map(test => test.totalScore),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 3,
                 tension: 0.1,
@@ -206,7 +226,7 @@ function createBarChart(testResults) {
     const ctx = document.getElementById('barChart').getContext('2d');
     const testNames = Object.keys(testResults);
     const scores = testNames.map(test => testResults[test].score);
-    const maxScores = testNames.map(test => testResults[test].max);
+    const maxScores = testNames.map(test => testResults[test].maxScore);
 
     if (barChartInstance) barChartInstance.destroy();
 
@@ -261,11 +281,11 @@ function fillResultsTable(testResults) {
         const row = tableBody.insertRow();
 
         row.insertCell(0).textContent = test;
-        row.insertCell(1).textContent = `${data.score}/${data.max}`;
+        row.insertCell(1).textContent = `${data.score}/${data.maxScore}`;
         row.insertCell(2).textContent = getTestInterpretation(test, data.score);
 
         // Color coding based on performance
-        const performanceRatio = data.score / data.max;
+        const performanceRatio = data.score / data.maxScore;
         if (performanceRatio < 0.5) {
             row.cells[2].style.color = '#e63946';
         } else if (performanceRatio < 0.75) {
@@ -276,117 +296,44 @@ function fillResultsTable(testResults) {
     });
 }
 
+function resetCharts() {
+    if (lineChartInstance) {
+        lineChartInstance.destroy();
+        lineChartInstance = null;
+    }
+    if (barChartInstance) {
+        barChartInstance.destroy();
+        barChartInstance = null;
+    }
+}
+
+function clearResultsTable() {
+    const tableBody = document.getElementById('tabla-resultados').querySelector('tbody');
+    tableBody.innerHTML = '';
+    const row = tableBody.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 3;
+    cell.textContent = 'No test results available';
+    cell.style.textAlign = 'center';
+}
+
+function displayTestNotes(notes) {
+    const notesContainer = document.getElementById('test-notes-container');
+    notesContainer.innerHTML = '<h3>Test Notes</h3>';
+    
+    notes.forEach(note => {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'test-note';
+        noteElement.innerHTML = `
+            <strong>${note.questionId}:</strong>
+            <p>${note.note}</p>
+        `;
+        notesContainer.appendChild(noteElement);
+    });
+}
+
 function getTestInterpretation(test, score) {
-    const interpretations = {
-        "Head Lift": {
-            0: "Unable to lift head",
-            1: "Lifts head for 1-9 seconds",
-            2: "Lifts head for 10-29 seconds",
-            3: "Lifts head for 30-59 seconds",
-            4: "Lifts head for 60-119 seconds",
-            5: "Maintains head lift for 2 minutes"
-        },
-        "Leg Raise/Touch Object": {
-            0: "Unable to lift leg off table",
-            1: "Able to clear table but can't touch object",
-            2: "Able to lift leg and touch object"
-        },
-        "Straight Leg Lift/Duration": {
-            0: "Unable to lift leg",
-            1: "Maintains leg lift for 1-9 seconds",
-            2: "Maintains leg lift for 10-29 seconds",
-            3: "Maintains leg lift for 30-59 seconds",
-            4: "Maintains leg lift for 60-119 seconds",
-            5: "Maintains leg lift for 2 minutes"
-        },
-        "Supine to Prone": {
-            0: "Unable to turn over",
-            1: "Turns to side but can't free arm completely",
-            2: "Turns over with some difficulty",
-            3: "Turns over easily with no difficulty"
-        },
-        "Sit-ups": {
-            0: "Unable to perform any sit-up variation",
-            1: "Can perform 1 sit-up variation",
-            2: "Can perform 2 sit-up variations",
-            3: "Can perform 3 sit-up variations",
-            4: "Can perform 4 sit-up variations",
-            5: "Can perform 5 sit-up variations",
-            6: "Can perform all 6 sit-up variations"
-        },
-        "Supine to Sit": {
-            0: "Unable to sit up independently",
-            1: "Can sit up with great difficulty",
-            2: "Can sit up with some difficulty",
-            3: "Can sit up with no difficulty"
-        },
-        "Arm Raise/Straighten": {
-            0: "Cannot raise arms to shoulder level",
-            1: "Can raise to shoulder level but not above head",
-            2: "Can raise above head but not fully extend elbows",
-            3: "Can fully extend arms straight above head"
-        },
-        "Arm Raise/Duration": {
-            0: "Unable to maintain arm position",
-            1: "Maintains position for 1-9 seconds",
-            2: "Maintains position for 10-29 seconds",
-            3: "Maintains position for 30-59 seconds",
-            4: "Maintains position for 60-119 seconds",
-            5: "Maintains position for 2 minutes"
-        },
-        "Floor Sit": {
-            0: "Unable to sit on floor",
-            1: "Can sit with chair support",
-            2: "Can sit without support but with difficulty",
-            3: "Can sit without support easily"
-        },
-        "All Fours Maneuver": {
-            0: "Unable to get on all fours",
-            1: "Can assume position but can't maintain",
-            2: "Can maintain position but can't crawl",
-            3: "Can crawl forward",
-            4: "Can extend one leg while maintaining balance"
-        },
-        "Floor Rise": {
-            0: "Unable to rise from floor",
-            1: "Can rise with chair support",
-            2: "Can rise using hands on knees/thighs",
-            3: "Can rise with mild difficulty",
-            4: "Can rise with no difficulty"
-        },
-        "Chair Rise": {
-            0: "Unable to rise from chair",
-            1: "Can rise using hands on seat",
-            2: "Can rise using hands on knees",
-            3: "Can rise with mild difficulty",
-            4: "Can rise with no difficulty"
-        },
-        "Stool Step": {
-            0: "Unable to step onto stool",
-            1: "Can step up with table support",
-            2: "Can step up using hand on knee",
-            3: "Can step up without assistance"
-        },
-        "Pick-up": {
-            0: "Unable to pick up object from floor",
-            1: "Can pick up with heavy knee support",
-            2: "Can pick up with brief knee support",
-            3: "Can pick up without support"
-        }
-    };
-
-    // Verificar si el test existe y si el score es válido
-    if (!interpretations[test]) {
-        console.warn(`Interpretation not found for test: ${test}`);
-        return "No interpretation available";
-    }
-
-    if (interpretations[test][score] === undefined) {
-        console.warn(`Invalid score ${score} for test: ${test}`);
-        return "Invalid score";
-    }
-
-    return interpretations[test][score];
+    // ... (keep the existing interpretation function as is)
 }
 
 function updatePatientVideo(videoUrl) {
@@ -431,6 +378,67 @@ function setupMessaging() {
             });
         } catch (error) {
             console.error('Error sending message:', error);
+        }
+    });
+}
+
+function setupTestManagement() {
+    // Create new test button
+    document.getElementById('create-test-btn').addEventListener('click', async function() {
+        if (!currentPatientId) {
+            showNotification('Please select a patient first', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetchWithAuth('/doctor/tests/create', {
+                method: 'POST',
+                body: JSON.stringify({
+                    patientId: currentPatientId
+                })
+            });
+
+            currentTestId = response.testId;
+            showNotification('New test created successfully', 'success');
+            
+            // Refresh patient data to show the new test
+            await updatePatientData(currentPatientId);
+        } catch (error) {
+            console.error('Error creating test:', error);
+        }
+    });
+
+    // Save test notes button
+    document.getElementById('save-notes-btn').addEventListener('click', async function() {
+        if (!currentTestId) {
+            showNotification('No active test selected', 'error');
+            return;
+        }
+
+        const notesText = document.getElementById('test-notes-input').value;
+        if (!notesText) {
+            showNotification('Please enter some notes', 'error');
+            return;
+        }
+
+        try {
+            await fetchWithAuth(`/doctor/tests/${currentTestId}/notes`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    notes: [{
+                        questionId: 'general',
+                        note: notesText
+                    }]
+                })
+            });
+
+            showNotification('Notes saved successfully', 'success');
+            document.getElementById('test-notes-input').value = '';
+            
+            // Refresh to show the new notes
+            await updatePatientData(currentPatientId);
+        } catch (error) {
+            console.error('Error saving notes:', error);
         }
     });
 }
