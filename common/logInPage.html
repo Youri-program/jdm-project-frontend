@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myotrack</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+
+    <!-- Patient Login Form -->
+    <div id="user-form" class="form">
+        <!-- Toggle Buttons -->
+        <div class="toggle-buttons">
+            <button id="user-btn" class="active" onclick="switchForm('user')">Patient</button>
+            <button id="admin-btn" onclick="switchForm('admin')">Doctor</button>
+        </div>
+
+        <img alt="logo" src="1.png" height="250" width="250"/>
+
+
+        <h2>Patient Login</h2>
+        <input id="us_usern" type="text" placeholder="Username" required>
+        <input id="us_pass" type="password" placeholder="Password" required>
+
+        <button id="patient-login-btn">Login</button>
+        <button id="register-patient">Register</button>
+    </div>
+
+    <!-- Patient Registration Form -->
+    <div id="register-form" class="form hidden">
+        <img alt="logo" src="../resources/1.png" height="250" width="250"/>
+        <h2>Register Patient</h2>
+        <input id="usr_register_usern" type="text" placeholder="Username" required>
+        <input id="email" type="email" placeholder="Email" required>
+        <input id="usr_register_pasw" type="password" placeholder="Password" required>
+        <input id="first_n" type="text" placeholder="First name" required>
+        <input id="last_n" type="text" placeholder="Last name" required>
+        <input id="phone_num" type="text" placeholder="Phone number" required>
+        <input id="date_birth" type="text" placeholder="Date of birth" required>
+
+
+        <button id="patient-register-submit">Register</button>
+        <button id="back-to-login">Back to Login</button>
+    </div>
+
+    <!-- Doctor Login Form -->
+    <div id="admin-form" class="form hidden">
+        <!-- Toggle Buttons -->
+        <div class="toggle-buttons">
+            <button  onclick="switchForm('user')">Patient</button>
+            <button class="active" onclick="switchForm('admin')">Doctor</button>
+        </div>
+
+        <img alt="logo" src="../resources/1.png" height="250" width="250"/>
+        <h2>Doctor Login</h2>
+        <input id="doc_user" type="text" placeholder="Username" required>
+        <input id="doc_pass" type="password" placeholder="Password" required>
+        <button id="doctor-login-btn">Login</button>
+    </div>
+
+
+
+    <script src="scripts.js"></script>
+    <script src="log_in.js"></script>
+</body>
+</html>
