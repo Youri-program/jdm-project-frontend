@@ -439,3 +439,34 @@ tr:hover td {
         grid-template-columns: 1fr;
     }
 }
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: -300px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: right 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    max-width: 300px;
+}
+
+.notification.show {
+    right: 20px;
+    opacity: 1;
+}
+
+.notification.error {
+    background-color: #e63946;
+}
+
+.notification.success {
+    background-color: #2a9d8f;
+}
+
+.notification.info {
+    background-color: #4361ee;
+}
