@@ -1,8 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< Updated upstream
     const user_usn = document.getElementById('us_usern');
     const doc_usn = document.getElementById('doc_user');
     const user_pass = document.getElementById('us_pass');
     const doc_pass = document.getElementById('doc_pass');
+=======
+    const user_usn= document.getElementById('us_usern');
+    const doc_usn= document.getElementById('doc_user');
+    const user_pass= document.getElementById('us_passw');
+    const doc_pass= document.getElementById('doc_passw');
+    const reg_usn= document.getElementById('usr_register_usern');
+    const email= document.getElementById('email');
+    const reg_pasw= document.getElementById('usr_register_pasw');
+    const first_n= document.getElementById('first_n');
+    const last_n= document.getElementById('last_n');
+    const phone_num= document.getElementById('phone_num');
+    const date_birth= document.getElementById('date_birth');
+
+
+
+
+
+>>>>>>> Stashed changes
 
     async function authenticate(username, password, userType) {
         try {

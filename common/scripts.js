@@ -74,3 +74,36 @@ function switchForm(role) {
         body.classList.add('doctor-mode');
     }
 }
+
+document.getElementById('register-patient').addEventListener('click', () => {
+    const loginForm = document.getElementById('user-form');
+    const registerForm = document.getElementById('register-form');
+
+    // Animate out login
+    loginForm.classList.add('fade-out');
+    setTimeout(() => {
+        loginForm.classList.add('hidden');
+        loginForm.classList.remove('fade-out');
+
+        // Show registration
+        registerForm.classList.remove('hidden');
+        registerForm.classList.add('fade-in');
+    }, 300);
+});
+
+document.getElementById('back-to-login').addEventListener('click', () => {
+    const loginForm = document.getElementById('user-form');
+    const registerForm = document.getElementById('register-form');
+
+    // Animate out registration
+    registerForm.classList.add('fade-out');
+    setTimeout(() => {
+        registerForm.classList.add('hidden');
+        registerForm.classList.remove('fade-out');
+
+        // Show login
+        loginForm.classList.remove('hidden');
+        loginForm.classList.add('fade-in');
+    }, 300);
+});
+
