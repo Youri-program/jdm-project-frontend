@@ -6,17 +6,32 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div class="dashboard-container">
-    <div class="top-bar">
-      <div class="logo">Logo Placeholder</div>
-      <input type="text" class="searchbar" placeholder="Searchbar Placeholder" />
+  <!-- Top Navigation -->
+  <div class="top-bar">
+    <div class="logo">
+      <img src="../resources/1.png" alt="Logo" class="logo-img" />
     </div>
+    <div class="top-actions">
+      <button class="icon-button" title="Search">
+        🔍
+      </button>
+      <button class="icon-button" title="Settings">
+        ⚙️
+      </button>
+    </div>
+  </div>
 
+  <!-- Welcome Message -->
+  <div class="welcome-message" id="welcome-message">
+    <!-- This will be set dynamically -->
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard-container">
     <div class="grid">
       <div class="widget start-test" onclick="location.href='tests/cmas.html'">
         <h1>START TEST</h1>
       </div>
-
       <div class="widget profile">
         <p>Avatar Placeholder</p>
         <div class="avatar"></div>
