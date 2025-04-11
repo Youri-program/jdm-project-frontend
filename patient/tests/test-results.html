@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Results</title>
+  <link rel="stylesheet" href="../css/test-results.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Test Results Summary</h1>
+      <div class="header-actions">
+        <button id="back-to-tests" class="btn-back">← Back to Tests</button>
+      </div>
+    </div>
+
+    <div class="results-container">
+      <div class="loading-spinner" id="loading">
+        <div class="spinner"></div>
+        <p>Loading your test results...</p>
+      </div>
+
+      <div id="results-content" class="hidden">
+        <div class="test-info">
+          <h2>CMAS Test</h2>
+          <p>Complete all questions before submitting your test to the doctor.</p>
+        </div>
+
+        <div class="results-summary">
+          <div class="summary-item">
+            <div class="summary-icon">✓</div>
+            <div class="summary-text">
+              <h3 id="completed-count">0/14</h3>
+              <p>Questions Completed</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-list">
+          <h3>Your Answers</h3>
+          <div id="answers-list"></div>
+        </div>
+
+        <div class="submit-section">
+          <p id="submit-message">Please complete all questions before submitting.</p>
+          <button id="submit-btn" class="btn-submit" disabled>Submit Test to Doctor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Answer Item Template -->
+  <template id="answer-item-template">
+    <div class="answer-item">
+      <div class="question-info">
+        <span class="question-number"></span>
+        <h4 class="question-title"></h4>
+      </div>
+      <div class="answer-value"></div>
+    </div>
+  </template>
+
+  <script src="../js/test-results.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assigned Tests</title>
+  <link rel="stylesheet" href="../css/assigned-tests.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Your Assigned Tests</h1>
+      <button id="back-to-dashboard" class="btn-back">← Back to Dashboard</button>
+    </div>
+
+    <div class="tests-container">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="assigned">Assigned</button>
+        <button class="tab-btn" data-tab="completed">Completed</button>
+      </div>
+
+      <div class="tab-content active" id="assigned-tab">
+        <div class="loading-spinner" id="assigned-loading">
+          <div class="spinner"></div>
+          <p>Loading your tests...</p>
+        </div>
+        <div id="assigned-tests" class="tests-list"></div>
+        <div id="assigned-empty" class="empty-state hidden">
+          <p>You don't have any assigned tests at the moment.</p>
+        </div>
+      </div>
+
+      <div class="tab-content" id="completed-tab">
+        <div class="loading-spinner" id="completed-loading">
+          <div class="spinner"></div>
+          <p>Loading your tests...</p>
+        </div>
+        <div id="completed-tests" class="tests-list"></div>
+        <div id="completed-empty" class="empty-state hidden">
+          <p>You haven't completed any tests yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Card Template -->
+  <template id="test-card-template">
+    <div class="test-card">
+      <div class="test-info">
+        <h3 class="test-name">CMAS Test</h3>
+        <p class="test-date">Assigned: <span class="date-value"></span></p>
+        <p class="test-doctor">Dr. <span class="doctor-value"></span></p>
+      </div>
+      <div class="test-actions">
+        <button class="btn-start">Start Test</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="../js/assigned-tests.js"></script>
+</body>
+</html>
