@@ -8,15 +8,29 @@
 </head>
 <body>
   <div class="test-container">
-    <!-- Intro Section -->
-    <div id="intro-screen">
-      <h1>Welcome to the CMAS Test</h1>
-      <p>This test will guide you through 14 exercises that assess muscle strength and function. Follow the instructions and do your best.</p>
-      <button id="start-test-btn">Start Test</button>
+    <!-- Improved Intro Screen -->
+    <div id="intro-screen" class="screen">
+      <div class="intro-card">
+        <div class="intro-icon">
+          <div class="pulse-ring"></div>
+          <span>📋</span>
+        </div>
+        <h1>Welcome to the CMAS Test</h1>
+        <p>This test will guide you through 14 exercises that assess muscle strength and function. Follow the instructions and do your best.</p>
+        <ul class="intro-features">
+          <li><span class="feature-icon">✓</span> Answer all 14 questions</li>
+          <li><span class="feature-icon">📝</span> Review doctor's notes</li>
+          <li><span class="feature-icon">📊</span> Track your progress</li>
+        </ul>
+        <button id="start-test-btn" class="btn-primary">Start Test</button>
+        <div class="intro-nav">
+          <a href="assigned-tests.html">← Back to Test List</a>
+        </div>
+      </div>
     </div>
 
     <!-- Test Interface -->
-    <div id="question-screen" class="hidden">
+    <div id="question-screen" class="screen hidden">
       <h2 id="question-title">CMAS Test: Question 1</h2>
       <div class="question-layout">
         <!-- LEFT SIDE: Two stacked boxes -->

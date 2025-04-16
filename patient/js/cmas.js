@@ -27,9 +27,32 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  startBtn.addEventListener("click", () => {
-    introScreen.classList.add("hidden");
-    questionScreen.classList.remove("hidden");
+  // Improved screen transitions
+  startBtn.addEventListener("click", async () => {
+    // Show loading state
+    startBtn.disabled = true;
+    startBtn.textContent = "Loading test...";
+    
+    try {
+      // Initialize the test data
+      await initializeTest();
+      
+      // Switch screens with a smooth transition
+      introScreen.style.opacity = '0';
+      setTimeout(() => {
+        introScreen.classList.add("hidden");
+        questionScreen.classList.remove("hidden");
+        // Fade in the question screen
+        setTimeout(() => {
+          questionScreen.style.opacity = '1';
+        }, 50);
+      }, 300);
+    } catch (error) {
+      console.error("Failed to initialize test:", error);
+      startBtn.disabled = false;
+      startBtn.textContent = "Start Test";
+      alert("There was a problem loading the test. Please try again.");
+    }
   });
 
   prevBtn.addEventListener("click", () => {
@@ -161,9 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
       loadSavedAnswers();
       
       loadQuestion(0);
+      return true;
     } catch (error) {
       console.error('Error initializing test:', error);
       alert('Failed to initialize test. Please try again later.');
+      return false;
     }
   }
 
@@ -221,6 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("progress").style.width = `${progress}%`;
   }
 
-  // Initialize the test
-  initializeTest();
+  // Add fade transitions
+  introScreen.style.transition = 'opacity 0.3s ease';
+  questionScreen.style.transition = 'opacity 0.3s ease';
+  questionScreen.style.opacity = '0';
 });
